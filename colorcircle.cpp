@@ -11,11 +11,8 @@ ColorCircle::ColorCircle(CRGB *Leds, int iLeds = 120)
 //animate next step
 void ColorCircle::doNextStep()
 {
-    if(iGlobalPos < iLedCount)
-    {
-        iGlobalPos++;
-    }
-    else
+    iGlobalPos++;
+    if(iGlobalPos >= iLedCount)
     {
         iGlobalPos = 0;
     }

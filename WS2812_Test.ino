@@ -25,5 +25,5 @@ void loop()
 {
     Circle.doNextStep();
     LEDS.show();
-    delay(50);
+    delay(100);
 }
