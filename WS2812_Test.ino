@@ -3,7 +3,7 @@
 #include "rainbow.h"
 
 // define the number of LEDs
-#define NUM_LEDS 180
+#define NUM_LEDS 100
 
 CRGB leds[NUM_LEDS];
 //ColorCircle Animation(leds, NUM_LEDS);
@@ -14,7 +14,7 @@ void setup() {
     delay(1000);
 
     // setting brightness to 12%
-    LEDS.setBrightness(10);
+    LEDS.setBrightness(20);
 
     LEDS.addLeds<WS2811, 13, GRB>(leds, NUM_LEDS); //GRB for the WS2812 color order
 
@@ -27,5 +27,5 @@ void loop()
 {
     Animation.doNextStep();
     LEDS.show();
-    delay(1000);
+    delay(100);
 }

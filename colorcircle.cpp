@@ -62,7 +62,7 @@ void ColorCircle::doNextStep()
         iPos = iPos + (iLedCount / 6);
         if(iPos >= iLedCount)
         {
-            iPos = iPos - iLedCount;
+            iPos -= iLedCount;
         }
     }
 }
