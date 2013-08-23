@@ -10,6 +10,6 @@ protected:
 
 public:
     Animation(CRGB *Leds, int iLeds);
-    virtual void doNextStep(){}
+    virtual void doNextStep() = 0;
 };
 #endif

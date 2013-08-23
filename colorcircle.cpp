@@ -16,6 +16,9 @@ void ColorCircle::doNextStep()
     }
 
     int iPos = iGlobalPos;
+    int iRest = iLedCount % 6;
+    const int iSector = iLedCount / 6;
+    const int iColorLength = iSector - 5;
 
     memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB));
 
@@ -44,20 +47,26 @@ void ColorCircle::doNextStep()
             break;
         }
 
-        for(int j = 0; j < 10; j++)
+        for(int iColorPos = 0; iColorPos < iColorLength; iColorPos++)
         {
-            if(iPos - j >= 0)
+            if(iPos - iColorPos >= 0)
             {
-                pLEDS[iPos - j] = curColor;
+                pLEDS[iPos - iColorPos] = curColor;
             }
             else
             {
-                pLEDS[iPos + iLedCount - j] = curColor;
+                pLEDS[iPos + iLedCount - iColorPos] = curColor;
             }
-            curColor.nscale8(180);
+            curColor.nscale8(200);
         }
 
-        iPos = iPos + (iLedCount / 6);
+        if(iRest > 0)
+        {
+            iPos++;
+            iRest--;
+        }
+
+        iPos += iSector;
         if(iPos >= iLedCount)
         {
             iPos -= iLedCount;
