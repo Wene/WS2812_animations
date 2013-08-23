@@ -1,13 +1,16 @@
+#ifndef COLORCIRCLE_H
+#define COLORCIRCLE_H
 #include "FastSPI_LED2.h"
+#include "animation.h"
 
-class ColorCircle
+class ColorCircle : public Animation
 {
 private:
-    CRGB *pLEDS;
     int iGlobalPos;
-    int iLedCount;
 
 public:
     ColorCircle(CRGB *Leds, int iLeds);
     void doNextStep();
 };
+
+#endif

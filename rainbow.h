@@ -1,13 +1,16 @@
+#ifndef RAINBOW_H
+#define RAINBOW_H
 #include "FastSPI_LED2.h"
+#include "animation.h"
 
-class Rainbow
+class Rainbow : public Animation
 {
 private:
-    CRGB *pLEDS;
     int iGlobalPos;
-    int iLedCount;
 
 public:
     Rainbow(CRGB *Leds, int iLeds);
     void doNextStep();
 };
+
+#endif

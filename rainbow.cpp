@@ -1,11 +1,9 @@
 #include "rainbow.h"
 
 //Constructor
-Rainbow::Rainbow(CRGB *Leds, int iLeds = 120)
+Rainbow::Rainbow(CRGB *Leds, int iLeds) : Animation(Leds, iLeds)
 {
-    iLedCount = iLeds;  
     iGlobalPos = 0;
-    pLEDS = Leds;
 }
 
 //animate next step
