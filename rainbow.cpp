@@ -17,10 +17,12 @@ void Rainbow::doNextStep()
 
     const int iSectorSize = iLedCount / 6;
     int iRest = iLedCount % 6;
+    int iMaxColor = 140; //set maxColor lower than 255 to allow adding lighting waves.
 
+    //set the curent color of each LED
     for(int iSector = 0; iSector < 6; iSector++)
     {
-        // add one step as long as rest is available. This may make the first gradients one longer than the last.
+        //add one step as long as rest is available. This may make the first gradients one longer than the last.
         int iCurSectorSize = iSectorSize;
         if(iRest > 0)
         {
@@ -28,7 +30,6 @@ void Rainbow::doNextStep()
             iCurSectorSize++;
         }
 
-        int iMaxColor = 140; //set maxColor lower than 255 to allow adding a ighting wave.
         int iStepSize = iMaxColor / iCurSectorSize;
 
         for(int iCurPos = 0; iCurPos < iCurSectorSize; iCurPos++)
@@ -72,6 +73,35 @@ void Rainbow::doNextStep()
             }
 
             pLEDS[iPos] = CRGB(r,g,b);
+        }
+    }
+
+    //set the lighting waves
+    for(int iWave = 0; iWave < 3; iWave++)
+    {
+        int iWavePos = (iGlobalPos * -1) + (iLedCount - 1) + iWave * (iLedCount / 3);
+
+        for(int iWavePart = -4; iWavePart < 4; iWavePart++)
+        {
+            int iPos = iWavePos + iWavePart;
+            if(iPos >= iLedCount)
+            {
+                iPos -= iLedCount;
+            }
+            else if(iPos < 0)
+            {
+                iPos += iLedCount;
+            }
+            CRGB Led = pLEDS[iPos];
+            int iFactor = iWavePart;
+            if(iFactor < 0)
+            {
+                iFactor *= -1;
+            }
+            int iDiff = 255 - iMaxColor;
+            int iStep = iDiff / 4;
+            Led += iDiff - (iFactor * iStep);
+            pLEDS[iPos] = Led;
         }
     }
 }
