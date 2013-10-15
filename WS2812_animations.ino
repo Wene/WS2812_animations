@@ -1,4 +1,5 @@
 #include "FastSPI_LED2.h"
+#include "keypad.h"
 #include "animation.h"
 #include "rainbow.h"        //animation 0
 #include "colorcircle.h"    //animation 1
@@ -7,24 +8,18 @@
 #define NUM_LEDS 240
 
 CRGB leds[NUM_LEDS];
-//ColorCircle Animation(leds, NUM_LEDS);
-//Rainbow Animation(leds, NUM_LEDS);
+Keypad Keys(8,9,11,10,6,7);
 Animation *Anim;
-bool buttonPressed = false;
-int ledPin = 13;
-int buttonPin = 10;
 int currentAnimation = 0;
+int iBrightness = 100;
+int iSpeed = 10;
 
 void setup() {
-    pinMode(ledPin, OUTPUT);
-    pinMode(buttonPin, INPUT_PULLUP);
-    digitalWrite(ledPin, HIGH);
-
     //sanity check delay - allows reprogramming if accidently blowing power w/leds
     delay(1000);
 
     //setting maximum brightness
-    LEDS.setBrightness(45);
+    LEDS.setBrightness(iBrightness);
 
     LEDS.addLeds<WS2811, 12, GRB>(leds, NUM_LEDS); //GRB for the WS2812 color order
 
@@ -34,22 +29,16 @@ void setup() {
     //reset all the LEDs
     memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
     LEDS.show();
-    digitalWrite(ledPin, LOW);
 }
 
 void loop()
 {
-    int buttonState = digitalRead(buttonPin);
-    if(buttonState == LOW)
+    for(int i = 0; i < iSpeed; i++)
     {
-        buttonPressed = true;
-        digitalWrite(ledPin, HIGH);
-    }
-    else if(buttonState == HIGH)
-    {
-        if(buttonPressed)   //switch animation only if the button was pressed before
+        Keypad::key currentKey = Keys.checkKeys();
+        switch(currentKey)
         {
-            buttonPressed = false;
+        case Keypad::Next:
             delete Anim;
             currentAnimation++;
             if(currentAnimation > 1)    //reset
@@ -65,11 +54,37 @@ void loop()
                 Anim = new ColorCircle(leds, NUM_LEDS);
                 break;
             }
+            break;
+        case Keypad::DimUp:
+            if(iBrightness < 245)
+            {
+                iBrightness += 10;
+                LEDS.setBrightness(iBrightness);
+            }
+            break;
+        case Keypad::DimDown:
+            if(iBrightness > 20)
+            {
+                iBrightness -= 10;
+                LEDS.setBrightness(iBrightness);
+            }
+            break;
+        case Keypad::Faster:
+            if(iSpeed > 2)
+            {
+                iSpeed--;
+            }
+            break;
+        case Keypad::Slower:
+            if(iSpeed < 20)
+            {
+                iSpeed++;
+            }
+            break;
         }
-        digitalWrite(ledPin, LOW);
+        delay(10);
     }
 
     Anim->doNextStep();
     LEDS.show();
-    delay(100);
 }

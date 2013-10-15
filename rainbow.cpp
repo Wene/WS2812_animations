@@ -17,7 +17,7 @@ void Rainbow::doNextStep()
 
     const int iSectorSize = iLedCount / 6;
     int iRest = iLedCount % 6;
-    int iMaxColor = 140; //set maxColor lower than 255 to allow adding lighting waves.
+    int iMaxColor = 120; //set maxColor lower than 255 to allow adding lighting waves.
 
     //set the curent color of each LED
     for(int iSector = 0; iSector < 6; iSector++)
