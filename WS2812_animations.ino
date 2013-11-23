@@ -5,7 +5,7 @@
 #include "colorcircle.h"    //animation 1
 
 // define the number of LEDs
-#define NUM_LEDS 240
+#define NUM_LEDS 237
 
 CRGB leds[NUM_LEDS];
 Keypad Keys(8,9,11,10,6,7);
