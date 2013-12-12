@@ -81,7 +81,7 @@ void Rainbow::doNextStep()
     {
         int iWavePos = (iGlobalPos * -1) + (iLedCount - 1) + iWave * (iLedCount / 3);
 
-        for(int iWavePart = -4; iWavePart < 4; iWavePart++)
+        for(int iWavePart = -4; iWavePart <= 4; iWavePart++)
         {
             int iPos = iWavePos + iWavePart;
             if(iPos >= iLedCount)
