@@ -132,3 +132,10 @@ Keypad::key Keypad::checkKeys()    //returns the pressed key.
     return None;
 
 }
+
+void Keypad::blink()
+{
+    digitalWrite(ledPin, HIGH);
+    delay(5);
+    digitalWrite(ledPin, LOW);
+}

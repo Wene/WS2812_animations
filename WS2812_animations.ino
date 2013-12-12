@@ -13,11 +13,9 @@ Animation *Anim;
 int currentAnimation = 0;
 int iBrightness = 100;
 int iSpeed = 10;
+bool bStandBy = false;
 
 void setup() {
-    //sanity check delay - allows reprogramming if accidently blowing power w/leds
-    delay(1000);
-
     //setting maximum brightness
     LEDS.setBrightness(iBrightness);
 
@@ -81,10 +79,29 @@ void loop()
                 iSpeed++;
             }
             break;
+        case Keypad::OnOff:
+            if(bStandBy)
+            {
+                bStandBy = false;
+            }
+            else
+            {
+                bStandBy = true;
+            }
+            break;
         }
         delay(10);
     }
 
-    Anim->doNextStep();
-    LEDS.show();
+    if(bStandBy)
+    {
+        memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
+        LEDS.show();
+        Keys.blink();
+    }
+    else
+    {
+        Anim->doNextStep();
+        LEDS.show();
+    }
 }

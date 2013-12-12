@@ -12,6 +12,7 @@ public:
     Keypad(int up, int down, int onOff, int next, int faster, int slower);
     void setLedPin(int pin);
     void setKeyPins(int up, int down, int onOff, int next, int faster, int slower);
+    void blink();
     enum key{None, DimUp, DimDown, OnOff, Next, Faster, Slower};
     key checkKeys();
 
