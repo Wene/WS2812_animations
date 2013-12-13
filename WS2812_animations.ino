@@ -37,28 +37,20 @@ void loop()
         switch(currentKey)
         {
         case Keypad::Next:
-            if(bStandBy)    //single step for debugging
+            delete Anim;
+            currentAnimation++;
+            if(currentAnimation > 1)    //reset
             {
-                Anim->doNextStep();
-                LEDS.show();
+                currentAnimation = 0;
             }
-            else
+            switch(currentAnimation)
             {
-                delete Anim;
-                currentAnimation++;
-                if(currentAnimation > 1)    //reset
-                {
-                    currentAnimation = 0;
-                }
-                switch(currentAnimation)
-                {
-                case 0:
-                    Anim = new Rainbow(leds, NUM_LEDS);
-                    break;
-                case 1:
-                    Anim = new ColorCircle(leds, NUM_LEDS);
-                    break;
-                }
+            case 0:
+                Anim = new Rainbow(leds, NUM_LEDS);
+                break;
+            case 1:
+                Anim = new ColorCircle(leds, NUM_LEDS);
+                break;
             }
             break;
         case Keypad::DimUp:
@@ -103,8 +95,8 @@ void loop()
 
     if(bStandBy)
     {
-        //memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
-        //LEDS.show();
+        memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
+        LEDS.show();
         Keys.blink();
     }
     else
