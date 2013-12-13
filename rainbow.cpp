@@ -22,6 +22,7 @@ void Rainbow::doNextStep()
     memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //set all LEDs to black (for debugging reasons)
 
     //set the curent color of each LED
+    int iPos = iGlobalPos;  //set start position to current rotation offset
     for(int iSector = 0; iSector < 6; iSector++)
     {
         //add one step as long as rest is available. This may make the first gradients one longer than the last.
@@ -67,14 +68,14 @@ void Rainbow::doNextStep()
                 break;
             }
 
-            // set position in relation to current rotation offset
-            int iPos = iGlobalPos + (iCurPos + iCurSectorSize * iSector);
+            pLEDS[iPos] = CRGB(r,g,b);
+
+            //set next position, reset to 0 at overflow.
+            iPos++;
             if(iPos >= iLedCount)
             {
-                iPos -= iLedCount;
+                iPos = 0;
             }
-
-            pLEDS[iPos] = CRGB(r,g,b);
         }
     }
 
