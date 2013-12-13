@@ -19,8 +19,6 @@ void Rainbow::doNextStep()
     int iRest = iLedCount % 6;
     int iMaxColor = 120; //set maxColor lower than 255 to allow adding lighting waves.
 
-    memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //set all LEDs to black (for debugging reasons)
-
     //set the curent color of each LED
     int iPos = iGlobalPos;  //set start position to current rotation offset
     for(int iSector = 0; iSector < 6; iSector++)

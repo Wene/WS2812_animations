@@ -135,7 +135,14 @@ Keypad::key Keypad::checkKeys()    //returns the pressed key.
 
 void Keypad::blink()
 {
-    digitalWrite(ledPin, HIGH);
-    delay(5);
-    digitalWrite(ledPin, LOW);
+    if(bBlinkOn)
+    {
+        bBlinkOn = false;
+        digitalWrite(ledPin, LOW);
+    }
+    else
+    {
+        bBlinkOn = true;
+        digitalWrite(ledPin, HIGH);
+    }
 }

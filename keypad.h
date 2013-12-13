@@ -7,6 +7,7 @@ private:
     int ledPin;
     int keyDimUp, keyDimDown, keyOnOff, keyNext, keyFaster, keySlower;
     bool bDimUp, bDimDown, bOnOff, bNext, bFaster, bSlower;
+    bool bBlinkOn;
 
 public:
     Keypad(int up, int down, int onOff, int next, int faster, int slower);
