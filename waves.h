@@ -7,6 +7,7 @@ class Waves : public Animation
 {
 private:
     int iGlobalPos;
+    int iGlobalR, iGlobalG, iGlobalB;
 
 public:
     Waves(CRGB *Leds, int iLeds);

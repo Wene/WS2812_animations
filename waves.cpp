@@ -4,6 +4,9 @@
 Waves::Waves(CRGB *Leds, int iLeds) : Animation(Leds, iLeds)
 {
     iGlobalPos = 0;
+    iGlobalR = 200;
+    iGlobalG = 0;
+    iGlobalB = 0;
 }
 
 //animate next step
@@ -15,52 +18,68 @@ void Waves::doNextStep()
         iGlobalPos = 0;
     }
 
-    const int iStepCount = 20;  //must be a even number!
-    int iRest = iLedCount % iStepCount;
+    const int iStepCount = 10;
+    const int iStepBase = 170;
+    int iRest = iLedCount % (iStepCount*2);
     int iPos = iGlobalPos;
     CRGB Led;
-    bool bUp = false;
 
-    for(int iStep = 0; iStep < iStepCount; iStep++)
+    for(int iStep = 0; iStep < (iStepCount*2); iStep++)
     {
-        if(iStep % 2 == 0)
-        {
-            if(!bUp)
-            {
-                Led.setRGB(10,10,10);   //reset color on direction change
-            }
-            bUp = true;
-        }
-        else
-        {
-            bUp = false;
-        }
+        memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //blank out for debugging
 
-        int iWaveLength = iLedCount / iStepCount;
+        Led.setRGB(iGlobalR, iGlobalG, iGlobalB);
+
+        //Down
+        int iWavePartLength = iLedCount / (iStepCount*2);
         if(iRest > 0)
         {
-            iWaveLength++;
+            iWavePartLength++;
             iRest--;
         }
-        int iStepSize = 240 / iWaveLength;  //variable step size depending on variable wave length
-
-        for(int iCurPos = 0; iCurPos < iWaveLength; iCurPos++)
+        int iStepSize = iStepBase / iWavePartLength;  //variable step size depending on variable wave length
+        for(int iCurPos = 0; iCurPos < iWavePartLength; iCurPos++)
         {
-            if(bUp)   //up
-            {
-                Led += iStepSize;
-            }
-            else    //down
-            {
-                Led -= iStepSize;
-            }
-
+            Led -= iStepSize;
             pLEDS[iPos] = Led;
             iPos++;
             if(iPos >= iLedCount)
             {
                 iPos = 0;
             }
+        }
+
+        Led.setRGB(iGlobalR, iGlobalG, iGlobalB);
+
+        //Up
+        iWavePartLength = iLedCount / (iStepCount*2);
+        if(iRest > 0)
+        {
+            iWavePartLength++;
+            iRest--;
+        }
+        //Reverse direction to ensure the brightness gets allways decreased
+        iPos += iWavePartLength;
+        if(iPos >= iLedCount)
+        {
+            iPos -= iLedCount;
+        }
+        iStepSize = iStepBase / iWavePartLength;  //variable step size depending on variable wave length
+        for(int iCurPos = 0; iCurPos < iWavePartLength; iCurPos++)
+        {
+            Led -= iStepSize;
+            pLEDS[iPos] = Led;
+            iPos--;
+            if(iPos < 0)
+            {
+                iPos = iLedCount - 1;
+            }
+        }
+        //Restore the former position
+        iPos -= iWavePartLength;
+        if(iPos < 0)
+        {
+            iPos = iLedCount - 1;
         }
     }
 }
