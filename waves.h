@@ -8,6 +8,7 @@ class Waves : public Animation
 private:
     int iGlobalPos;
     int iGlobalR, iGlobalG, iGlobalB;
+    int iColorStep, iColorSubStep;
 
 public:
     Waves(CRGB *Leds, int iLeds);

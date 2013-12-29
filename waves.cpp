@@ -7,16 +7,56 @@ Waves::Waves(CRGB *Leds, int iLeds) : Animation(Leds, iLeds)
     iGlobalR = 200;
     iGlobalG = 0;
     iGlobalB = 0;
+    iColorStep = 0;
+    iColorSubStep = 0;
 }
 
 //animate next step
 void Waves::doNextStep()
 {
+    memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //blank out for debugging
+
     iGlobalPos++;
     if(iGlobalPos >= iLedCount)
     {
         iGlobalPos = 0;
     }
+
+    if(iColorSubStep < 200)
+    {
+        iColorSubStep++;
+    }
+    else
+    {
+        iColorSubStep = 0;
+        iColorStep++;
+        if(iColorStep > 5)
+        {
+            iColorStep = 0;
+        }
+    }
+    switch(iColorStep)
+    {
+    case 0: //red to yellow
+        iGlobalG++;
+        break;
+    case 1: //yellow to green
+        iGlobalR--;
+        break;
+    case 2: //green to cyan
+        iGlobalB++;
+        break;
+    case 3: //cyan to blue
+        iGlobalG--;
+        break;
+    case 4: //blue to magenta
+        iGlobalR++;
+        break;
+    case 5: //magenta to red
+        iGlobalB--;
+        break;
+    }
+
 
     const int iStepCount = 10;
     const int iStepBase = 170;
@@ -24,10 +64,8 @@ void Waves::doNextStep()
     int iPos = iGlobalPos;
     CRGB Led;
 
-    for(int iStep = 0; iStep < (iStepCount*2); iStep++)
+    for(int iStep = 0; iStep < iStepCount; iStep++)
     {
-        memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //blank out for debugging
-
         Led.setRGB(iGlobalR, iGlobalG, iGlobalB);
 
         //Down
@@ -75,11 +113,11 @@ void Waves::doNextStep()
                 iPos = iLedCount - 1;
             }
         }
-        //Restore the former position
-        iPos -= iWavePartLength;
-        if(iPos < 0)
+        //Set cursor to the end of the current wave
+        iPos += iWavePartLength + 1;  //+1 to reset the last iPos--.
+        if(iPos >= iLedCount)
         {
-            iPos = iLedCount - 1;
+            iPos -= iLedCount;
         }
     }
 }
