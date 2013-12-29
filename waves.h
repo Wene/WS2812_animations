@@ -7,8 +7,10 @@ class Waves : public Animation
 {
 private:
     int iGlobalPos;
-    int iGlobalR, iGlobalG, iGlobalB;
+    int iRed, iGreen, iBlue;
     int iColorStep, iColorSubStep;
+
+//add functions for repeating steps...
 
 public:
     Waves(CRGB *Leds, int iLeds);

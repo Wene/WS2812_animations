@@ -4,9 +4,9 @@
 Waves::Waves(CRGB *Leds, int iLeds) : Animation(Leds, iLeds)
 {
     iGlobalPos = 0;
-    iGlobalR = 200;
-    iGlobalG = 0;
-    iGlobalB = 0;
+    iRed = 200;
+    iGreen = 0;
+    iBlue = 0;
     iColorStep = 0;
     iColorSubStep = 0;
 }
@@ -28,7 +28,7 @@ void Waves::doNextStep()
     }
     else
     {
-        iColorSubStep = 0;
+        iColorSubStep = 1;
         iColorStep++;
         if(iColorStep > 5)
         {
@@ -38,22 +38,22 @@ void Waves::doNextStep()
     switch(iColorStep)
     {
     case 0: //red to yellow
-        iGlobalG++;
+        iGreen++;
         break;
     case 1: //yellow to green
-        iGlobalR--;
+        iRed--;
         break;
     case 2: //green to cyan
-        iGlobalB++;
+        iBlue++;
         break;
     case 3: //cyan to blue
-        iGlobalG--;
+        iGreen--;
         break;
     case 4: //blue to magenta
-        iGlobalR++;
+        iRed++;
         break;
     case 5: //magenta to red
-        iGlobalB--;
+        iBlue--;
         break;
     }
 
@@ -66,7 +66,7 @@ void Waves::doNextStep()
 
     for(int iStep = 0; iStep < iStepCount; iStep++)
     {
-        Led.setRGB(iGlobalR, iGlobalG, iGlobalB);
+        Led.setRGB(iRed, iGreen, iBlue);
 
         //Down
         int iWavePartLength = iLedCount / (iStepCount*2);
@@ -87,7 +87,7 @@ void Waves::doNextStep()
             }
         }
 
-        Led.setRGB(iGlobalR, iGlobalG, iGlobalB);
+        Led.setRGB(iRed, iGreen, iBlue);
 
         //Up
         iWavePartLength = iLedCount / (iStepCount*2);
