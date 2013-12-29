@@ -9,8 +9,8 @@ private:
     int iGlobalPos;
     int iRed, iGreen, iBlue;
     int iColorStep, iColorSubStep;
-
-//add functions for repeating steps...
+    int iCurrentPos;
+    void setLed(bool up, CRGB &Led);
 
 public:
     Waves(CRGB *Leds, int iLeds);

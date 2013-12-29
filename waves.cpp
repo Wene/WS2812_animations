@@ -59,9 +59,8 @@ void Waves::doNextStep()
 
 
     const int iStepCount = 10;
-    const int iStepBase = 170;
     int iRest = iLedCount % (iStepCount*2);
-    int iPos = iGlobalPos;
+    iCurrentPos = iGlobalPos;
     CRGB Led;
 
     for(int iStep = 0; iStep < iStepCount; iStep++)
@@ -75,16 +74,9 @@ void Waves::doNextStep()
             iWavePartLength++;
             iRest--;
         }
-        int iStepSize = iStepBase / iWavePartLength;  //variable step size depending on variable wave length
         for(int iCurPos = 0; iCurPos < iWavePartLength; iCurPos++)
         {
-            Led -= iStepSize;
-            pLEDS[iPos] = Led;
-            iPos++;
-            if(iPos >= iLedCount)
-            {
-                iPos = 0;
-            }
+            setLed(true, Led);
         }
 
         Led.setRGB(iRed, iGreen, iBlue);
@@ -97,27 +89,43 @@ void Waves::doNextStep()
             iRest--;
         }
         //Reverse direction to ensure the brightness gets allways decreased
-        iPos += iWavePartLength;
-        if(iPos >= iLedCount)
+        iCurrentPos += iWavePartLength - 1;
+        if(iCurrentPos >= iLedCount)
         {
-            iPos -= iLedCount;
+            iCurrentPos -= iLedCount;
         }
-        iStepSize = iStepBase / iWavePartLength;  //variable step size depending on variable wave length
         for(int iCurPos = 0; iCurPos < iWavePartLength; iCurPos++)
         {
-            Led -= iStepSize;
-            pLEDS[iPos] = Led;
-            iPos--;
-            if(iPos < 0)
-            {
-                iPos = iLedCount - 1;
-            }
+            setLed(false, Led);
         }
         //Set cursor to the end of the current wave
-        iPos += iWavePartLength + 1;  //+1 to reset the last iPos--.
-        if(iPos >= iLedCount)
+        iCurrentPos += iWavePartLength + 1;  //+1 to reset the last iPos--.
+        if(iCurrentPos >= iLedCount)
         {
-            iPos -= iLedCount;
+            iCurrentPos -= iLedCount;
+        }
+    }
+}
+
+void Waves::setLed(bool up, CRGB &Led)
+{
+
+    Led.nscale8(200);
+    pLEDS[iCurrentPos] = Led;
+    if(up)
+    {
+        iCurrentPos++;
+        if(iCurrentPos >= iLedCount)
+        {
+            iCurrentPos = 0;
+        }
+    }
+    else
+    {
+        iCurrentPos--;
+        if(iCurrentPos < 0)
+        {
+            iCurrentPos = iLedCount - 1;
         }
     }
 }
