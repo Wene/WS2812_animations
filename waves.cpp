@@ -14,8 +14,6 @@ Waves::Waves(CRGB *Leds, int iLeds) : Animation(Leds, iLeds)
 //animate next step
 void Waves::doNextStep()
 {
-    memset(pLEDS, 0,  iLedCount * sizeof(struct CRGB)); //blank out for debugging
-
     iGlobalPos++;
     if(iGlobalPos >= iLedCount)
     {

@@ -106,8 +106,6 @@ void loop()
 
     if(bStandBy)
     {
-        //memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
-        //LEDS.show();
         Keys.blink();
     }
     else
