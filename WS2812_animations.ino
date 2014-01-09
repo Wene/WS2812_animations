@@ -3,9 +3,10 @@
 #include "animation.h"
 #include "rainbow.h"        //animation 0
 #include "colorcircle.h"    //animation 1
+#include "waves.h"          //animation 2
 
 // define the number of LEDs
-#define NUM_LEDS 237
+#define NUM_LEDS 236
 
 CRGB leds[NUM_LEDS];
 Keypad Keys(8,9,11,10,6,7);
@@ -39,7 +40,7 @@ void loop()
         case Keypad::Next:
             delete Anim;
             currentAnimation++;
-            if(currentAnimation > 1)    //reset
+            if(currentAnimation > 2)    //reset
             {
                 currentAnimation = 0;
             }
@@ -51,7 +52,10 @@ void loop()
             case 1:
                 Anim = new ColorCircle(leds, NUM_LEDS);
                 break;
+            case 2:
+                Anim = new Waves(leds, NUM_LEDS);
             }
+
             break;
         case Keypad::DimUp:
             if(iBrightness < 245)
