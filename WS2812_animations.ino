@@ -4,6 +4,7 @@
 #include "rainbow.h"        //animation 0
 #include "colorcircle.h"    //animation 1
 #include "waves.h"          //animation 2
+#include "swiss.h"          //animation 3
 
 // define the number of LEDs
 #define NUM_LEDS 236
@@ -22,7 +23,7 @@ void setup() {
 
     LEDS.addLeds<WS2811, 12, GRB>(leds, NUM_LEDS); //GRB for the WS2812 color order
 
-    //Rainbow *Ani = new Rainbow(leds, NUM_LEDS);
+    //Setup default (startup) animation
     Anim = new Rainbow(leds, NUM_LEDS);
 
     //reset all the LEDs
@@ -47,7 +48,7 @@ void loop()
             {
                 delete Anim;
                 currentAnimation++;
-                if(currentAnimation > 2)    //reset
+                if(currentAnimation > 3)    //reset
                 {
                     currentAnimation = 0;
                 }
@@ -61,6 +62,10 @@ void loop()
                     break;
                 case 2:
                     Anim = new Waves(leds, NUM_LEDS);
+                    break;
+                case 3:
+                    Anim = new Swiss(leds, NUM_LEDS);
+                    break;
                 }
             }
             break;
