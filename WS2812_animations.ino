@@ -16,6 +16,7 @@ int currentAnimation = 0;
 int iBrightness = 100;
 int iSpeed = 10;
 bool bStandBy = false;
+bool bDebug = false;
 
 void setup() {
     //setting maximum brightness
@@ -39,7 +40,7 @@ void loop()
         switch(currentKey)
         {
         case Keypad::Next:
-            if(bStandBy)    //single step for debugging
+            if(bDebug && bStandBy)    //single step for debugging
             {
                 Anim->doNextStep();
                 LEDS.show();
@@ -76,6 +77,10 @@ void loop()
                 LEDS.setBrightness(iBrightness);
             }
             break;
+        case Keypad::DimMax:
+            iBrightness = 250;
+            LEDS.setBrightness(iBrightness);
+            break;
         case Keypad::DimDown:
             if(iBrightness > 20)
             {
@@ -83,11 +88,18 @@ void loop()
                 LEDS.setBrightness(iBrightness);
             }
             break;
+        case Keypad::DimMin:
+            iBrightness = 20;
+            LEDS.setBrightness(iBrightness);
+            break;
         case Keypad::Faster:
             if(iSpeed > 2)
             {
                 iSpeed--;
             }
+            break;
+        case Keypad::Fastest:
+            iSpeed = 2;
             break;
         case Keypad::Slower:
             if(iSpeed < 20)
@@ -95,15 +107,25 @@ void loop()
                 iSpeed++;
             }
             break;
+        case Keypad::Slowest:
+            iSpeed = 20;
+            break;
         case Keypad::OnOff:
             if(bStandBy)
             {
                 bStandBy = false;
+                bDebug = false;
             }
             else
             {
                 bStandBy = true;
+                memset(leds, 0,  NUM_LEDS * sizeof(struct CRGB));
+                LEDS.show();
             }
+            break;
+        case Keypad::Debug:
+            bDebug = true;
+            bStandBy = true;
             break;
         }
         delay(10);

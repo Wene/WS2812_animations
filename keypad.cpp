@@ -9,6 +9,7 @@ Keypad::Keypad(int up, int down, int onOff, int next, int faster, int slower)
     bNext = false;
     bOnOff = false;
     bSlower = false;
+    iLongPress = 0;
 
     setLedPin(13);  //default LED pin
     setKeyPins(up, down, onOff, next, faster, slower);
@@ -42,59 +43,83 @@ Keypad::key Keypad::checkKeys()    //returns the pressed key.
     if(digitalRead(keyDimUp) == LOW)
     {
         bDimUp = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bDimUp)
         {
             bDimUp = false;
-            digitalWrite(ledPin, LOW);
-            return DimUp;
+            if(iLongPress > 50)
+            {
+                returnValue = DimMax;
+            }
+            else
+            {
+                returnValue = DimUp;
+            }
+            keyUp();
+            return returnValue;
         }
     }
 
     if(digitalRead(keyDimDown) == LOW)
     {
         bDimDown = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bDimDown)
         {
             bDimDown = false;
-            digitalWrite(ledPin, LOW);
-            return DimDown;
+            if(iLongPress > 50)
+            {
+                returnValue = DimMin;
+            }
+            else
+            {
+                returnValue = DimDown;
+            }
+            keyUp();
+            return returnValue;
         }
     }
 
     if(digitalRead(keyOnOff) == LOW)
     {
         bOnOff = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bOnOff)
         {
             bOnOff = false;
-            digitalWrite(ledPin, LOW);
-            return OnOff;
+            if(iLongPress > 50)
+            {
+                returnValue = Debug;
+            }
+            else
+            {
+                returnValue = OnOff;
+            }
+            keyUp();
+            return returnValue;
         }
     }
 
     if(digitalRead(keyNext) == LOW)
     {
         bNext = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bNext)
         {
             bNext = false;
-            digitalWrite(ledPin, LOW);
+            keyUp();
             return Next;
         }
     }
@@ -102,30 +127,44 @@ Keypad::key Keypad::checkKeys()    //returns the pressed key.
     if(digitalRead(keyFaster) == LOW)
     {
         bFaster = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bFaster)
         {
             bFaster = false;
-            digitalWrite(ledPin, LOW);
-            return Faster;
+            if(iLongPress > 50)
+            {
+                returnValue = Fastest;
+            }
+            else
+            {
+                returnValue = Faster;
+            }
+            keyUp();
+            return returnValue;
         }
     }
 
     if(digitalRead(keySlower) == LOW)
     {
         bSlower = true;
-        digitalWrite(ledPin, HIGH);
+        keyDown();
     }
     else
     {
         if(bSlower)
         {
             bSlower = false;
-            digitalWrite(ledPin, LOW);
-            return Slower;
+            if(iLongPress > 50)
+            {
+                returnValue = Slowest;
+            }
+            else
+                returnValue = Slower;
+            keyUp();
+            return returnValue;
         }
     }
 
@@ -145,4 +184,23 @@ void Keypad::blink()
         bBlinkOn = true;
         digitalWrite(ledPin, HIGH);
     }
+}
+
+void Keypad::keyDown()
+{
+    iLongPress++;
+    if(iLongPress > 50)
+    {
+        digitalWrite(ledPin, LOW);
+    }
+    else
+    {
+        digitalWrite(ledPin, HIGH);
+    }
+}
+
+void Keypad::keyUp()
+{
+    digitalWrite(ledPin, LOW);
+    iLongPress = 0;
 }
