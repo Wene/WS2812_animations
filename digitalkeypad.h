@@ -1,10 +1,10 @@
-#ifndef KEYPAD_H
-#define KEYPAD_H
+#ifndef DIGITAL-KEYPAD_H
+#define DIGITAL-KEYPAD_H
 
-class Keypad
+class DigitalKeypad
 {
 public:
-    Keypad(int up, int down, int onOff, int next, int faster, int slower);
+    DigitalKeypad(int up, int down, int onOff, int next, int faster, int slower);
     void setLedPin(int pin);
     void setKeyPins(int up, int down, int onOff, int next, int faster, int slower);
     void blink();

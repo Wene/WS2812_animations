@@ -1,5 +1,5 @@
 #include "FastSPI_LED2.h"
-#include "keypad.h"
+#include "digitalkeypad.h"
 #include "animation.h"
 #include "rainbow.h"        //animation 0
 #include "colorcircle.h"    //animation 1
@@ -10,7 +10,7 @@
 #define NUM_LEDS 236
 
 CRGB leds[NUM_LEDS];
-Keypad Keys(8,9,11,10,6,7);
+DigitalKeypad Keys(8,9,11,10,6,7);
 Animation *Anim;
 int currentAnimation = 0;
 int iBrightness = 100;
@@ -36,10 +36,10 @@ void loop()
 {
     for(int i = 0; i < iSpeed; i++)
     {
-        Keypad::key currentKey = Keys.checkKeys();
+        DigitalKeypad::key currentKey = Keys.checkKeys();
         switch(currentKey)
         {
-        case Keypad::Next:
+        case DigitalKeypad::Next:
             if(bDebug && bStandBy)    //single step for debugging
             {
                 Anim->doNextStep();
@@ -70,47 +70,47 @@ void loop()
                 }
             }
             break;
-        case Keypad::DimUp:
+        case DigitalKeypad::DimUp:
             if(iBrightness < 245)
             {
                 iBrightness += 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        case Keypad::DimMax:
+        case DigitalKeypad::DimMax:
             iBrightness = 250;
             LEDS.setBrightness(iBrightness);
             break;
-        case Keypad::DimDown:
+        case DigitalKeypad::DimDown:
             if(iBrightness > 20)
             {
                 iBrightness -= 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        case Keypad::DimMin:
+        case DigitalKeypad::DimMin:
             iBrightness = 20;
             LEDS.setBrightness(iBrightness);
             break;
-        case Keypad::Faster:
+        case DigitalKeypad::Faster:
             if(iSpeed > 2)
             {
                 iSpeed--;
             }
             break;
-        case Keypad::Fastest:
+        case DigitalKeypad::Fastest:
             iSpeed = 2;
             break;
-        case Keypad::Slower:
+        case DigitalKeypad::Slower:
             if(iSpeed < 20)
             {
                 iSpeed++;
             }
             break;
-        case Keypad::Slowest:
+        case DigitalKeypad::Slowest:
             iSpeed = 20;
             break;
-        case Keypad::OnOff:
+        case DigitalKeypad::OnOff:
             if(bStandBy)
             {
                 bStandBy = false;
@@ -123,7 +123,7 @@ void loop()
                 LEDS.show();
             }
             break;
-        case Keypad::Debug:
+        case DigitalKeypad::Debug:
             bDebug = true;
             bStandBy = true;
             break;

@@ -1,7 +1,7 @@
-#include "keypad.h"
+#include "digitalkeypad.h"
 #include "Arduino.h"
 
-Keypad::Keypad(int up, int down, int onOff, int next, int faster, int slower)
+DigitalKeypad::DigitalKeypad(int up, int down, int onOff, int next, int faster, int slower)
 {
     bDimDown = false;
     bDimUp = false;
@@ -15,7 +15,7 @@ Keypad::Keypad(int up, int down, int onOff, int next, int faster, int slower)
     setKeyPins(up, down, onOff, next, faster, slower);
 }
 
-void Keypad::setKeyPins(int up, int down, int onOff, int next, int faster, int slower)
+void DigitalKeypad::setKeyPins(int up, int down, int onOff, int next, int faster, int slower)
 {
     keyDimUp = up;
     keyDimDown = down;
@@ -32,13 +32,13 @@ void Keypad::setKeyPins(int up, int down, int onOff, int next, int faster, int s
     pinMode(keySlower, INPUT_PULLUP);
 }
 
-void Keypad::setLedPin(int pin)
+void DigitalKeypad::setLedPin(int pin)
 {
     ledPin = pin;
     pinMode(ledPin, OUTPUT);
 }
 
-Keypad::key Keypad::checkKeys()    //returns the pressed key.
+DigitalKeypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
 {
     if(digitalRead(keyDimUp) == LOW)
     {
@@ -172,7 +172,7 @@ Keypad::key Keypad::checkKeys()    //returns the pressed key.
 
 }
 
-void Keypad::blink()
+void DigitalKeypad::blink()
 {
     if(bBlinkOn)
     {
@@ -186,7 +186,7 @@ void Keypad::blink()
     }
 }
 
-void Keypad::keyDown()
+void DigitalKeypad::keyDown()
 {
     iLongPress++;
     if(iLongPress > 50)
@@ -199,7 +199,7 @@ void Keypad::keyDown()
     }
 }
 
-void Keypad::keyUp()
+void DigitalKeypad::keyUp()
 {
     digitalWrite(ledPin, LOW);
     iLongPress = 0;
