@@ -1,5 +1,5 @@
-#ifndef DIGITAL-KEYPAD_H
-#define DIGITAL-KEYPAD_H
+#ifndef DIGITAL_KEYPAD_H
+#define DIGITAL_KEYPAD_H
 
 class DigitalKeypad
 {
