@@ -1,8 +1,6 @@
 #include "FastSPI_LED2.h"
 
-//#include "digitalkeypad.h"
-#include "analogkeypad.h"
-
+#include "keypad.h"
 #include "animation.h"
 #include "rainbow.h"        //animation 0
 #include "colorcircle.h"    //animation 1
@@ -14,8 +12,7 @@
 
 CRGB leds[NUM_LEDS];
 
-//DigitalKeypad Keys(8, 9, 11, 10, 6, 7);
-AnalogKeypad Keys(509, 913, 0, 658, 955, 845, A0);
+Keypad Keys();
 
 Animation *Anim;
 int currentAnimation = 0;
@@ -42,13 +39,11 @@ void loop()
 {
     for(int i = 0; i < iSpeed; i++)
     {
-        //DigitalKeypad::key currentKey = Keys.checkKeys();
-        AnalogKeypad::key currentKey = Keys.checkKeys();
+        Keypad::key currentKey = Keys.checkKeys();
 
         switch(currentKey)
         {
-        //case DigitalKeypad::Next:
-        case AnalogKeypad::Next:
+        case Keypad::Next:
             if(bDebug && bStandBy)    //single step for debugging
             {
                 Anim->doNextStep();
@@ -79,56 +74,47 @@ void loop()
                 }
             }
             break;
-        //case DigitalKeypad::DimUp:
-        case AnalogKeypad::DimUp:
+        case Keypad::DimUp:
             if(iBrightness < 245)
             {
                 iBrightness += 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        //case DigitalKeypad::DimMax:
-        case AnalogKeypad::DimMax:
+        case Keypad::DimMax:
             iBrightness = 250;
             LEDS.setBrightness(iBrightness);
             break;
-        //case DigitalKeypad::DimDown:
-        case AnalogKeypad::DimDown:
+        case Keypad::DimDown:
             if(iBrightness > 20)
             {
                 iBrightness -= 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        //case DigitalKeypad::DimMin:
-        case AnalogKeypad::DimMin:
+        case Keypad::DimMin:
             iBrightness = 20;
             LEDS.setBrightness(iBrightness);
             break;
-        //case DigitalKeypad::Faster:
-        case AnalogKeypad::Faster:
+        case Keypad::Faster:
             if(iSpeed > 2)
             {
                 iSpeed--;
             }
             break;
-        //case DigitalKeypad::Fastest:
-        case AnalogKeypad::Fastest:
+        case Keypad::Fastest:
             iSpeed = 2;
             break;
-        //case DigitalKeypad::Slower:
-        case AnalogKeypad::Slower:
+        case Keypad::Slower:
             if(iSpeed < 20)
             {
                 iSpeed++;
             }
             break;
-        //case DigitalKeypad::Slowest:
-        case AnalogKeypad::Slowest:
+        case Keypad::Slowest:
             iSpeed = 20;
             break;
-        //case DigitalKeypad::OnOff:
-        case AnalogKeypad::OnOff:
+        case Keypad::OnOff:
             if(bStandBy)
             {
                 bStandBy = false;
@@ -141,8 +127,7 @@ void loop()
                 LEDS.show();
             }
             break;
-        //case DigitalKeypad::Debug:
-        case AnalogKeypad::Debug:
+        case Keypad::Debug:
             bDebug = true;
             bStandBy = true;
             break;

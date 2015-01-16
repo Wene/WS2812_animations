@@ -1,6 +1,8 @@
 #ifndef DIGITAL_KEYPAD_H
 #define DIGITAL_KEYPAD_H
 
+#include "keypad.h"
+
 class DigitalKeypad
 {
 public:
@@ -8,8 +10,7 @@ public:
     void setLedPin(int pin);
     void setKeyPins(int up, int down, int onOff, int next, int faster, int slower);
     void blink();
-    enum key{None, DimUp, DimDown, OnOff, Next, Faster, Slower, Debug, DimMax, DimMin, Slowest, Fastest};
-    key checkKeys();
+    Keypad::key checkKeys();
 
 private:
     int ledPin;
@@ -17,7 +18,7 @@ private:
     int iLongPress;
     bool bDimUp, bDimDown, bOnOff, bNext, bFaster, bSlower;
     bool bBlinkOn;
-    key returnValue;
+    Keypad::key returnValue;
 
     void keyDown();
     void keyUp();

@@ -55,11 +55,11 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
             bDimUp = false;
             if(iLongPress > 50)
             {
-                returnValue = DimMax;
+                returnValue = Keypad::DimMax;
             }
             else
             {
-                returnValue = DimUp;
+                returnValue = Keypad::DimUp;
             }
             keyUp();
             return returnValue;
@@ -78,11 +78,11 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
             bDimDown = false;
             if(iLongPress > 50)
             {
-                returnValue = DimMin;
+                returnValue = Keypad::DimMin;
             }
             else
             {
-                returnValue = DimDown;
+                returnValue = Keypad::DimDown;
             }
             keyUp();
             return returnValue;
@@ -101,11 +101,11 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
             bOnOff = false;
             if(iLongPress > 50)
             {
-                returnValue = Debug;
+                returnValue = Keypad::Debug;
             }
             else
             {
-                returnValue = OnOff;
+                returnValue = Keypad::OnOff;
             }
             keyUp();
             return returnValue;
@@ -123,7 +123,7 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
         {
             bNext = false;
             keyUp();
-            return Next;
+            return Keypad::Next;
         }
     }
 
@@ -139,11 +139,11 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
             bFaster = false;
             if(iLongPress > 50)
             {
-                returnValue = Fastest;
+                returnValue = Keypad::Fastest;
             }
             else
             {
-                returnValue = Faster;
+                returnValue = Keypad::Faster;
             }
             keyUp();
             return returnValue;
@@ -162,10 +162,10 @@ AnalogKeypad::key AnalogKeypad::checkKeys()    //returns the pressed key.
             bSlower = false;
             if(iLongPress > 50)
             {
-                returnValue = Slowest;
+                returnValue = Keypad::Slowest;
             }
             else
-                returnValue = Slower;
+                returnValue = Keypad::Slower;
             keyUp();
             return returnValue;
         }
