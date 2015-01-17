@@ -2,17 +2,19 @@
 #define KEYPAD_H
 
 #include "Arduino.h"
+#include "commontypes.h"
+
 #include "digitalkeypad.h"
 #include "analogkeypad.h"
 
-class Keypad
+class KeyPad
 {
 
 public:
-    enum key{None, DimUp, DimDown, OnOff, Next, Faster, Slower, Debug, DimMax, DimMin, Slowest, Fastest};
     enum padType{analog, digital};
     key checkKeys();
-    Keypad(padType type);
+    KeyPad(padType type);
+    void blink();
 
 private:
     padType activePad;

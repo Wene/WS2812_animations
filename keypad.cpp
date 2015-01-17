@@ -1,6 +1,6 @@
 #include "keypad.h"
 
-Keypad::Keypad(padType type)
+KeyPad::KeyPad(padType type)
 {
     switch(type)
     {
@@ -15,7 +15,7 @@ Keypad::Keypad(padType type)
     }
 }
 
-Keypad::key Keypad::checkKeys()
+key KeyPad::checkKeys()
 {
     switch(activePad)
     {
@@ -28,3 +28,14 @@ Keypad::key Keypad::checkKeys()
     }
 }
 
+void KeyPad::blink()
+{
+    switch (activePad) {
+    case analog:
+        padAnalog->blink();
+        break;
+    case digital:
+        padDigital->blink();
+        break;
+    }
+}

@@ -8,11 +8,11 @@
 #include "swiss.h"          //animation 3
 
 // define the number of LEDs
-#define NUM_LEDS 236
+#define NUM_LEDS 150
 
 CRGB leds[NUM_LEDS];
 
-Keypad Keys();
+KeyPad Keys(KeyPad::analog);
 
 Animation *Anim;
 int currentAnimation = 0;
@@ -39,11 +39,11 @@ void loop()
 {
     for(int i = 0; i < iSpeed; i++)
     {
-        Keypad::key currentKey = Keys.checkKeys();
+        key currentKey = Keys.checkKeys();
 
         switch(currentKey)
         {
-        case Keypad::Next:
+        case Next:
             if(bDebug && bStandBy)    //single step for debugging
             {
                 Anim->doNextStep();
@@ -74,47 +74,47 @@ void loop()
                 }
             }
             break;
-        case Keypad::DimUp:
+        case DimUp:
             if(iBrightness < 245)
             {
                 iBrightness += 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        case Keypad::DimMax:
+        case DimMax:
             iBrightness = 250;
             LEDS.setBrightness(iBrightness);
             break;
-        case Keypad::DimDown:
+        case DimDown:
             if(iBrightness > 20)
             {
                 iBrightness -= 10;
                 LEDS.setBrightness(iBrightness);
             }
             break;
-        case Keypad::DimMin:
+        case DimMin:
             iBrightness = 20;
             LEDS.setBrightness(iBrightness);
             break;
-        case Keypad::Faster:
+        case Faster:
             if(iSpeed > 2)
             {
                 iSpeed--;
             }
             break;
-        case Keypad::Fastest:
+        case Fastest:
             iSpeed = 2;
             break;
-        case Keypad::Slower:
+        case Slower:
             if(iSpeed < 20)
             {
                 iSpeed++;
             }
             break;
-        case Keypad::Slowest:
+        case Slowest:
             iSpeed = 20;
             break;
-        case Keypad::OnOff:
+        case OnOff:
             if(bStandBy)
             {
                 bStandBy = false;
@@ -127,7 +127,7 @@ void loop()
                 LEDS.show();
             }
             break;
-        case Keypad::Debug:
+        case Debug:
             bDebug = true;
             bStandBy = true;
             break;

@@ -38,7 +38,7 @@ void DigitalKeypad::setLedPin(int pin)
     pinMode(ledPin, OUTPUT);
 }
 
-Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
+key DigitalKeypad::checkKeys()    //returns the pressed key.
 {
     if(digitalRead(keyDimUp) == LOW)
     {
@@ -52,11 +52,11 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
             bDimUp = false;
             if(iLongPress > 50)
             {
-                returnValue = Keypad::DimMax;
+                returnValue = DimMax;
             }
             else
             {
-                returnValue = Keypad::DimUp;
+                returnValue = DimUp;
             }
             keyUp();
             return returnValue;
@@ -75,11 +75,11 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
             bDimDown = false;
             if(iLongPress > 50)
             {
-                returnValue = Keypad::DimMin;
+                returnValue = DimMin;
             }
             else
             {
-                returnValue = Keypad::DimDown;
+                returnValue = DimDown;
             }
             keyUp();
             return returnValue;
@@ -98,11 +98,11 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
             bOnOff = false;
             if(iLongPress > 50)
             {
-                returnValue = Keypad::Debug;
+                returnValue = Debug;
             }
             else
             {
-                returnValue = Keypad::OnOff;
+                returnValue = OnOff;
             }
             keyUp();
             return returnValue;
@@ -120,7 +120,7 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
         {
             bNext = false;
             keyUp();
-            return Keypad::Next;
+            return Next;
         }
     }
 
@@ -136,11 +136,11 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
             bFaster = false;
             if(iLongPress > 50)
             {
-                returnValue = Keypad::Fastest;
+                returnValue = Fastest;
             }
             else
             {
-                returnValue = Keypad::Faster;
+                returnValue = Faster;
             }
             keyUp();
             return returnValue;
@@ -159,10 +159,10 @@ Keypad::key DigitalKeypad::checkKeys()    //returns the pressed key.
             bSlower = false;
             if(iLongPress > 50)
             {
-                returnValue = Keypad::Slowest;
+                returnValue = Slowest;
             }
             else
-                returnValue = Keypad::Slower;
+                returnValue = Slower;
             keyUp();
             return returnValue;
         }
